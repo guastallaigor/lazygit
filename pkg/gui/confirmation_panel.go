@@ -78,7 +78,6 @@ func (gui *Gui) prepareConfirmationPanel(currentView *gocui.View, title, prompt 
 		confirmationView.FgColor = gocui.ColorWhite
 	}
 	gui.g.Update(func(g *gocui.Gui) error {
-		confirmationView.Clear()
 		return gui.switchFocus(gui.g, currentView, confirmationView)
 	})
 	return confirmationView, nil

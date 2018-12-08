@@ -447,6 +447,21 @@ func addEnglish(i18nObject *i18n.Bundle) error {
 		}, &i18n.Message{
 			ID:    "Fetching",
 			Other: "fetching and fast-forwarding {{.from}} -> {{.to}} ...",
+		}, &i18n.Message{
+			ID:    "MergingTitle",
+			Other: "Resolve merge conflicts",
+		}, &i18n.Message{
+			ID:    "FoundConflicts",
+			Other: "Damn, conflicts! To abort press 'esc', otherwise press 'enter'",
+		}, &i18n.Message{
+			ID:    "Undo",
+			Other: "undo",
+		}, &i18n.Message{
+			ID:    "PickHunk",
+			Other: "pick hunk",
+		}, &i18n.Message{
+			ID:    "PickBothHunks",
+			Other: "pick both hunks",
 		},
 	)
 }

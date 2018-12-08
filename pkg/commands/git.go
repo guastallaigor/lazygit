@@ -285,6 +285,14 @@ func (c *GitCommand) AbortRebaseBranch() error {
 	return c.OSCommand.RunCommand("git rebase --abort")
 }
 
+func (c *GitCommand) ContinueMergeBranch() error {
+	return c.OSCommand.RunCommand("git merge --continue")
+}
+
+func (c *GitCommand) AbortMergeBranch() error {
+	return c.OSCommand.RunCommand("git merge --abort")
+}
+
 // Fetch fetch git repo
 func (c *GitCommand) Fetch() error {
 	return c.OSCommand.RunCommand("git fetch")
