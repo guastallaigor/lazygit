@@ -419,7 +419,7 @@ func (gui *Gui) layout(g *gocui.Gui) error {
 	// here is a good place log some stuff
 	// if you download humanlog and do tail -f development.log | humanlog
 	// this will let you see these branches as prettified json
-	// gui.Log.Info(utils.AsJson(gui.State.Branches[0:4]))
+	gui.Log.Info(utils.AsJson(gui.State.Files))
 
 	return gui.resizeCurrentPopupPanel(g)
 }

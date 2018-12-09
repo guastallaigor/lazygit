@@ -22,6 +22,7 @@ func (gui *Gui) findConflicts(content string) ([]commands.Conflict, error) {
 	var newConflict commands.Conflict
 	for i, line := range utils.SplitLines(content) {
 		trimmedLine := strings.TrimPrefix(line, "++")
+		gui.Log.Info(trimmedLine)
 		if trimmedLine == "<<<<<<< HEAD" || trimmedLine == "<<<<<<< MERGE_HEAD" || trimmedLine == "<<<<<<< Updated upstream" {
 			newConflict = commands.Conflict{Start: i}
 		} else if trimmedLine == "=======" {
@@ -186,6 +187,7 @@ func (gui *Gui) refreshMergePanel(g *gocui.Gui) error {
 	if cat == "" {
 		return nil
 	}
+	gui.Log.Info(cat)
 	panelState.Conflicts, err = gui.findConflicts(cat)
 	if err != nil {
 		return err
@@ -254,26 +256,31 @@ func (gui *Gui) handleEscapeMerge(g *gocui.Gui, v *gocui.View) error {
 	gui.State.Panels.Merging.EditHistory = stack.New()
 	gui.g.SetViewOnBottom("merging")
 	gui.refreshFiles()
-	return gui.switchFocus(g, v, gui.getFilesView())
+	// it's possible this method won't be called from the merging view so we need to
+	// ensure we only 'return' focus if we already have it
+	if gui.g.CurrentView() == gui.getMergingView() {
+		return gui.switchFocus(g, v, gui.getFilesView())
+	}
+	return nil
 }
 
 func (gui *Gui) handleCompleteMerge(g *gocui.Gui) error {
 	filesView := gui.getFilesView()
 	gui.stageSelectedFile(g)
 	gui.refreshFiles()
-	if rebase, err := gui.GitCommand.IsInRebaseState(); rebase && err == nil {
-		if err := gui.GitCommand.ContinueRebaseBranch(); err != nil {
-			if strings.Contains(err.Error(), "No changes - did you forget to use") {
-				if err := gui.GitCommand.SkipRebaseBranch(); err != nil {
-					gui.Log.Errorln(err)
-				}
-			} else {
-				gui.Log.Errorln(err)
-			}
-		}
-		if err := gui.refreshSidePanels(g); err != nil {
-			return err
-		}
-	}
+	// if rebase, err := gui.GitCommand.IsInRebaseState(); rebase && err == nil {
+	// 	if err := gui.GitCommand.ContinueRebaseBranch(); err != nil {
+	// 		if strings.Contains(err.Error(), "No changes - did you forget to use") {
+	// 			if err := gui.GitCommand.SkipRebaseBranch(); err != nil {
+	// 				gui.Log.Errorln(err)
+	// 			}
+	// 		} else {
+	// 			gui.Log.Errorln(err)
+	// 		}
+	// 	}
+	// 	if err := gui.refreshSidePanels(g); err != nil {
+	// 		return err
+	// 	}
+	// }
 	return gui.switchFocus(g, nil, filesView)
 }

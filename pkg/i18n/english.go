@@ -462,6 +462,21 @@ func addEnglish(i18nObject *i18n.Bundle) error {
 		}, &i18n.Message{
 			ID:    "PickBothHunks",
 			Other: "pick both hunks",
+		}, &i18n.Message{
+			ID:    "ViewMergeRebaseOptions",
+			Other: "view merge/rebase options",
+		}, &i18n.Message{
+			ID:    "NotMergingOrRebasing",
+			Other: "You are currently neither rebasing nor merging",
+		}, &i18n.Message{
+			ID:    "RecentRepos",
+			Other: "recent repositories",
+		}, &i18n.Message{
+			ID:    "MergeOptionsTitle",
+			Other: "Merge Options",
+		}, &i18n.Message{
+			ID:    "RebaseOptionsTitle",
+			Other: "Rebase Options",
 		},
 	)
 }

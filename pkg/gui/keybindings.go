@@ -153,11 +153,11 @@ func (gui *Gui) GetKeybindings() []*Binding {
 			Handler:     gui.handleFileRemove,
 			Description: gui.Tr.SLocalize("removeFile"),
 		}, {
-			ViewName:    "files",
+			ViewName:    "files", // TODO: might make this for more views as well
 			Key:         'm',
 			Modifier:    gocui.ModNone,
-			Handler:     gui.handleSwitchToMerge,
-			Description: gui.Tr.SLocalize("resolveMergeConflicts"),
+			Handler:     gui.handleCreateRebaseOptionsMenu,
+			Description: gui.Tr.SLocalize("ViewMergeRebaseOptions"),
 		}, {
 			ViewName:    "files",
 			Key:         'e',
@@ -188,12 +188,6 @@ func (gui *Gui) GetKeybindings() []*Binding {
 			Modifier:    gocui.ModNone,
 			Handler:     gui.handleStashSave,
 			Description: gui.Tr.SLocalize("stashFiles"),
-		}, {
-			ViewName:    "files",
-			Key:         'M',
-			Modifier:    gocui.ModNone,
-			Handler:     gui.handleAbortMerge,
-			Description: gui.Tr.SLocalize("abortMerge"),
 		}, {
 			ViewName:    "files",
 			Key:         'a',
